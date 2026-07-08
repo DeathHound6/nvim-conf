@@ -24,6 +24,17 @@ vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.showcmd = true
 
+-- A statusline per window (default), so each window shows its own buffer number.
+vim.opt.laststatus = 2
+-- Prefix the buffer number (%n) to Neovim's rich default statusline, so every
+-- window shows the buffer it's displaying while keeping the built-in segments
+-- (file, flags, diagnostics, ruler, ...). %n = buffer number of the window.
+-- Guarded so re-sourcing this file doesn't stack the prefix repeatedly.
+local buf_prefix = "B:%n "
+if not vim.o.statusline:find(buf_prefix, 1, true) then
+    vim.opt.statusline = buf_prefix .. vim.o.statusline
+end
+
 -- Highlight matches for last search pattern
 vim.opt.hlsearch = true
 -- Show match for partial search
