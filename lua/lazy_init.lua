@@ -164,6 +164,24 @@ local plugin_specs = {
   {
     "nvim-telescope/telescope.nvim",
     version = "v0.2.2",
+    config = function()
+      require("telescope").setup {
+        pickers = {
+          find_files = {
+            hidden = true,
+            find_command = {
+              "rg",
+              "--files",
+              "--hidden",
+              "--glob",
+              "!**/.git/**",
+            },
+          },
+        },
+      }
+
+      pcall(require("telescope").load_extension, "fzf")
+    end,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-symbols.nvim",
