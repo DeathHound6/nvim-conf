@@ -18,6 +18,10 @@ vim.opt.splitbelow = true
 -- Jump to start of line
 -- vim.opt.startofline = true
 
+
+-- Merge Visual Mode yank and system clipboards
+vim.opt.clipboard = "unnamedplus"
+
 -- Show line number
 vim.opt.number = true
 -- Show the line the cursor is on
