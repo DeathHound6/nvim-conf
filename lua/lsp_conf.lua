@@ -48,6 +48,11 @@ local lsp_servers = {
         optional = true,
         enabled = true,
     },
+    opa_regal = {
+        exe = "regal",
+        optional = true,
+        enabled = true,
+    },
     pyright = {
         exe = "pyright-langserver",
         optional = false,
