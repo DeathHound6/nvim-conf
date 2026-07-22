@@ -8,16 +8,11 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 -- Auto set indent of a new line
 vim.opt.autoindent = true
-vim.opt.smartindent = true
 -- Tab in an indent inserts 'shift width' spaces
 vim.opt.smarttab = true
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
--- Jump to start of line
--- vim.opt.startofline = true
-
 
 -- Merge Visual Mode yank and system clipboards
 vim.opt.clipboard = "unnamedplus"
@@ -39,8 +34,6 @@ if not vim.o.statusline:find(buf_prefix, 1, true) then
     vim.opt.statusline = buf_prefix .. vim.o.statusline
 end
 
--- Highlight matches for last search pattern
-vim.opt.hlsearch = true
 -- Show match for partial search
 vim.opt.incsearch = true
 
@@ -77,8 +70,6 @@ vim.opt.wildignore:append {
     "*/node_modules/*",
     "*.DS_Store",
 }
--- Ignore file and dir name cases in cmd-completion
-vim.opt.wildignorecase = true
 
 -- Auto reload file if changed outside nvim
 vim.opt.autoread = true

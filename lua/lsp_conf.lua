@@ -48,6 +48,11 @@ local lsp_servers = {
         optional = true,
         enabled = true,
     },
+    marksman = {
+        exe = "marksman",
+        optional = true,
+        enabled = true,
+    },
     opa_regal = {
         exe = "regal",
         optional = true,

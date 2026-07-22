@@ -195,7 +195,6 @@ local plugin_specs = {
       search = {
         command = "rg",
         args = {
-          "--color=never",
           "--no-heading",
           "--with-filename",
           "--line-number",
@@ -211,7 +210,18 @@ local plugin_specs = {
     event = "InsertEnter",
     config = true,
     opts = {},
-}
+  },
+  -- In-editor Markdown rendering (headings, code blocks, lists, tables,
+  -- checkboxes) via Treesitter. Loads only for markdown buffers.
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons", -- code-block/language icons
+    },
+    opts = {},
+  }
 }
 
 require("lazy").setup({

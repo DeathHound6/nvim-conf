@@ -3,20 +3,6 @@ set synmaxcol=3000  " For long Chinese paragraphs
 
 set wrap
 
-" Fix minor issue with footnote, see https://github.com/vim-pandoc/vim-markdownfootnotes/issues/22
-if exists(':FootnoteNumber')
-  nnoremap <buffer><silent> ^^ :<C-U>call markdownfootnotes#VimFootnotes('i')<CR>
-  inoremap <buffer><silent> ^^ <C-O>:<C-U>call markdownfootnotes#VimFootnotes('i')<CR>
-  imap <buffer> <silent> @@ <Plug>ReturnFromFootnote
-  nmap <buffer> <silent> @@ <Plug>ReturnFromFootnote
-endif
-
-" Text objects for Markdown code blocks.
-xnoremap <buffer><silent> ic :<C-U>call text_obj#MdCodeBlock('i')<CR>
-xnoremap <buffer><silent> ac :<C-U>call text_obj#MdCodeBlock('a')<CR>
-onoremap <buffer><silent> ic :<C-U>call text_obj#MdCodeBlock('i')<CR>
-onoremap <buffer><silent> ac :<C-U>call text_obj#MdCodeBlock('a')<CR>
-
 " Use + to turn several lines to an unordered list.
 " Ref: https://vi.stackexchange.com/q/5495/15292 and https://stackoverflow.com/q/42438795/6064933.
 nnoremap <buffer><silent> + :set operatorfunc=AddListSymbol<CR>g@
