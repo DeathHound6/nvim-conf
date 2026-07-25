@@ -134,6 +134,9 @@ local plugin_specs = {
     lazy = true,
   },
   {
+    "SirVer/ultisnips",
+  },
+  {
     -- VS Code-style per-kind icons in the completion menu.
     "onsails/lspkind.nvim",
     lazy = true,
