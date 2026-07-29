@@ -130,11 +130,18 @@ local plugin_specs = {
     lazy = true,
   },
   {
-    "quangnguyen30192/cmp-nvim-ultisnips",
-    lazy = true,
+    "L3MON4D3/LuaSnip",
+    -- build step compiles the optional regex/jsregexp helper; harmless if it fails.
+    build = "make install_jsregexp",
+    dependencies = { "rafamadriz/friendly-snippets" },
+    config = function()
+      -- Load friendly-snippets (VS Code format) into LuaSnip.
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end,
   },
   {
-    "SirVer/ultisnips",
+    "saadparwaiz1/cmp_luasnip",
+    lazy = true,
   },
   {
     -- VS Code-style per-kind icons in the completion menu.
