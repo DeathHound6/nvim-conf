@@ -231,6 +231,13 @@ local plugin_specs = {
       "nvim-tree/nvim-web-devicons", -- code-block/language icons
     },
     opts = {},
+  },
+  {
+    "ovk/endec.nvim",
+    event = "VeryLazy",
+    opts = {
+        -- Override default configuration here
+    }
   }
 }
 
