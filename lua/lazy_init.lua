@@ -236,8 +236,14 @@ local plugin_specs = {
     "ovk/endec.nvim",
     event = "VeryLazy",
     opts = {
-        -- Override default configuration here
-    }
+      keymaps = {
+        -- `gl` is reserved for Telescope live_grep (see lua/mappings.lua).
+        -- endec loads on VeryLazy, i.e. after mappings.lua, so its default
+        -- would otherwise clobber ours. Move URL-decode-popup to `gu`.
+        decode_url_popup = "gu",
+        vdecode_url_popup = "gu",
+      },
+    },
   }
 }
 
