@@ -3,7 +3,6 @@ local cmp = require("cmp")
 local lspkind = require("lspkind")
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local handlers = require('nvim-autopairs.completion.handlers')
-local npairs = require("nvim-autopairs")
 
 cmp.event:on(
   'confirm_done',
@@ -19,9 +18,8 @@ cmp.event:on(
     },
   })
 )
-npairs.setup({
-  check_ts = true,
-})
+-- nvim-autopairs setup lives in config/autopairs.lua (a second setup() call
+-- here would clobber that configuration).
 
 -- The extentions needed by nvim-cmp should be loaded beforehand
 require("cmp_nvim_lsp")

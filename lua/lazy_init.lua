@@ -218,8 +218,13 @@ local plugin_specs = {
   {
     'windwp/nvim-autopairs',
     event = "InsertEnter",
-    config = true,
-    opts = {},
+    -- config.autopairs owns the single setup() call and installs our smart <CR>.
+    -- Previously `config = true, opts = {}` re-ran setup() here on InsertEnter,
+    -- *after* nvim_cmp.lua's `setup({check_ts = true})`, silently resetting
+    -- check_ts back to false.
+    config = function()
+      require("config.autopairs")
+    end,
   },
   -- In-editor Markdown rendering (headings, code blocks, lists, tables,
   -- checkboxes) via Treesitter. Loads only for markdown buffers.
