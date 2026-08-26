@@ -25,14 +25,33 @@ vim.opt.showcmd = true
 
 -- A statusline per window (default), so each window shows its own buffer number.
 vim.opt.laststatus = 2
--- Prefix the buffer number (%n) to Neovim's rich default statusline, so every
--- window shows the buffer it's displaying while keeping the built-in segments
--- (file, flags, diagnostics, ruler, ...). %n = buffer number of the window.
--- Guarded so re-sourcing this file doesn't stack the prefix repeatedly.
-local buf_prefix = "B:%n "
-if not vim.o.statusline:find(buf_prefix, 1, true) then
-    vim.opt.statusline = buf_prefix .. vim.o.statusline
+
+require("statusline_git").setup()
+
+-- Wrapper so 'statusline' has a stable name to call, and so the brackets only
+-- appear when there is actually a branch to show (i.e. not outside a repo).
+_G.statusline_git = function()
+    local segment = require("statusline_git").status()
+    if segment == "" then
+        return ""
+    end
+    return "[" .. segment .. "] "
 end
+
+-- Neovim renders its "rich default" statusline internally and leaves the
+-- 'statusline' option itself empty, so there is nothing to append a segment to
+-- -- the whole line has to be spelled out to keep the built-in parts. Assigning
+-- the full string (rather than prepending) also makes re-sourcing idempotent.
+vim.opt.statusline = table.concat {
+    "B:%n ", -- buffer number, so each window says which buffer it holds
+    "%{%v:lua.statusline_git()%}", -- %{%...%} so the result's own % items expand
+    "%<%f", -- path, truncated from the left when the window is narrow
+    " %h%m%r", -- help / modified / readonly flags
+    "%=", -- right-align everything after this
+    "%y ", -- filetype
+    "%-14.(%l,%c%V%) ", -- line, column
+    "%P", -- percentage through the file
+}
 
 -- Show match for partial search
 vim.opt.incsearch = true
