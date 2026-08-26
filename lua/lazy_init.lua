@@ -215,6 +215,21 @@ local plugin_specs = {
       },
     },
   },
+  -- Per-line git status in the sign column. Diffs the in-memory buffer (via
+  -- nvim_buf_attach's on_lines, with no insert-mode guard), so signs track
+  -- edits as they are typed rather than waiting for a write.
+  {
+    "lewis6991/gitsigns.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      -- Defaults, spelled out because they are the point of this plugin here:
+      -- signs only, no number-column or intra-line highlighting.
+      signcolumn = true,
+      numhl = false,
+      linehl = false,
+      word_diff = false,
+    },
+  },
   {
     'windwp/nvim-autopairs',
     event = "InsertEnter",

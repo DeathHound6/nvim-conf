@@ -23,6 +23,10 @@ vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.showcmd = true
 
+-- Always reserve the sign column. With the default "auto" it would appear and
+-- vanish as git signs come and go, shifting text sideways mid-edit.
+vim.opt.signcolumn = "yes"
+
 -- A statusline per window (default), so each window shows its own buffer number.
 vim.opt.laststatus = 2
 
