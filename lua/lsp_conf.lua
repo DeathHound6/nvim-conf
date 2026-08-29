@@ -221,3 +221,24 @@ vim.api.nvim_create_autocmd("LspAttach", {
         })
     end,
 })
+
+
+
+local formatters = {
+    go = "gofmt -w %",
+    -- lua = "stylua %",
+    -- python = "black %",
+}
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = "*",
+    callback = function()
+        local formatter = formatters[vim.bo.filetype]
+
+        if formatter then
+            vim.fn.system(formatter)
+            vim.cmd("edit")
+        end
+    end,
+})
+
