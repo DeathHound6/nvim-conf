@@ -32,80 +32,12 @@ local plugin_specs = {
   },
   -- Treesitter (parser provider + structure-aware highlighting)
   {
+    -- NOTE: Requires tree-sitter (https://github.com/tree-sitter/tree-sitter) to be installed
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
     build = ":TSUpdate",
     config = function()
-      local parsers = {
-        "bash",
-        "c",
-        "c_sharp",
-        "cmake",
-        "cpp",
-        "css",
-        "dockerfile",
-        "go",
-        "gomod",
-        "gosum",
-        "helm",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "make",
-        "markdown",
-        "markdown_inline",
-        "ninja",
-        "python",
-        "sql",
-        "terraform",
-        "toml",
-        "typescript",
-        "vimdoc",
-        "yaml",
-      }
-
-      -- Install any missing parsers
-      require("nvim-treesitter").install(parsers)
-
-      -- Applies syntax highlighting to `:edit`
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "*",
-        callback = function(evt_ctx)
-          local ok = pcall(vim.treesitter.start, evt_ctx.buf)
-          if ok then
-            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-            -- 'indentexpr' is experimental
-            -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-          end
-        end,
-      })
-
-      -- Applies syntax highlighting to `:read`
-      vim.api.nvim_create_autocmd("FileReadPost", {
-        pattern = "*",
-        callback = function(evt_ctx)
-          local buf = evt_ctx.buf
-          if vim.bo[buf].filetype ~= "" then
-            return
-          end
-          local read_path = vim.fn.expand("<afile>")
-          if read_path == "" then
-            return
-          end
-          local had_name = vim.api.nvim_buf_get_name(buf) ~= ""
-          if not had_name then
-            vim.api.nvim_buf_set_name(buf, read_path)
-          end
-          -- Full detection pipeline -> resolves e.g. .tf to `terraform`
-          -- (vim.filetype.match alone can return the legacy `tf` name).
-          vim.cmd("filetype detect")
-          if not had_name then
-            -- Restore the unnamed state so :read semantics are unchanged.
-            vim.api.nvim_buf_set_name(buf, "")
-          end
-        end,
-      })
+      require("config.treesitter")
     end,
   },
   -- LSP + Autocompletions
@@ -172,6 +104,7 @@ local plugin_specs = {
     end,
   },
   {
+    -- NOTE: ripgrep (https://github.com/BurntSushi/ripgrep) should be installed for best find_files + live_grep
     "nvim-telescope/telescope.nvim",
     version = "v0.2.2",
     dependencies = {
@@ -216,7 +149,7 @@ local plugin_specs = {
     },
   },
   -- Per-line git status in the sign column. Diffs the in-memory buffer (via
-  -- nvim_buf_attach's on_lines, with no insert-mode guard), so signs track
+  -- nvim_buf_attach"s on_lines, with no insert-mode guard), so signs track
   -- edits as they are typed rather than waiting for a write.
   {
     "lewis6991/gitsigns.nvim",
@@ -231,11 +164,11 @@ local plugin_specs = {
     },
   },
   {
-    'windwp/nvim-autopairs',
+    "windwp/nvim-autopairs",
     event = "InsertEnter",
     -- config.autopairs owns the single setup() call and installs our smart <CR>.
     -- Previously `config = true, opts = {}` re-ran setup() here on InsertEnter,
-    -- *after* nvim_cmp.lua's `setup({check_ts = true})`, silently resetting
+    -- *after* nvim_cmp.lua"s `setup({check_ts = true})`, silently resetting
     -- check_ts back to false.
     config = function()
       require("config.autopairs")
@@ -264,6 +197,16 @@ local plugin_specs = {
         vdecode_url_popup = "gu",
       },
     },
+  },
+  {
+    -- NOTE: Requires sshfs (https://github.com/libfuse/sshfs) to be installed on local machine
+    -- ripgrep (https://github.com/BurntSushi/ripgrep) should be installed on remote machine too
+    "nosduco/remote-sshfs.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    opts = {},
+    config = function()
+        require("telescope").load_extension("remote-sshfs")
+    end
   }
 }
 
