@@ -203,16 +203,20 @@ local plugin_specs = {
     -- ripgrep (https://github.com/BurntSushi/ripgrep) should be installed on remote machine too
     "nosduco/remote-sshfs.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    opts = {},
-    config = function()
-        require("telescope").load_extension("remote-sshfs")
-    end
+    opts = {
+      ui = {
+        confirm = {
+          connect = false,
+        },
+      },
+    },
   }
 }
 
 require("lazy").setup({
-    spec = plugin_specs,
-    change_detection = {
-      notify = false,
-    },
+  spec = plugin_specs,
+  change_detection = {
+    notify = false,
+  },
 })
+require("telescope").load_extension "remote-sshfs"
