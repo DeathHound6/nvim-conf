@@ -33,6 +33,11 @@ local lsp_servers = {
         optional = true,
         enabled = true,
     },
+    clangd = {
+        exe = "clangd",
+        optional = true,
+        enabled = true,
+    },
     gopls = {
         exe = "gopls",
         optional = true,
