@@ -204,6 +204,14 @@ local plugin_specs = {
     "nosduco/remote-sshfs.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     opts = {
+      handlers = {
+        on_connect = {
+          change_dir = true,
+        },
+        on_disconnect = {
+          clean_mount_folders = true,
+        },
+      },
       ui = {
         confirm = {
           connect = false,

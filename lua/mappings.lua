@@ -9,18 +9,10 @@ vim.g.maplocalleader = ","
 
 -- Normal Mode
 vim.keymap.set("n", "ff", function()
-    if connections.is_connected() then
-        vim.cmd(":RemoteSSHFSFindFiles")
-    else
-        vim.cmd(":Telescope fd")
-    end
+    vim.cmd(":Telescope fd")
 end, { desc = "`ff` opens Telescope find_files" })
 vim.keymap.set("n", "gl", function()
-    if connections.is_connected() then
-        vim.cmd(":RemoteSSHFSLiveGrep")
-    else
-        vim.cmd(":Telescope live_grep")
-    end
+    vim.cmd(":Telescope live_grep")
 end, { desc = "`gl` openes Telescope live_grep" })
 vim.keymap.set("n", "gd", "<C-]>", { desc = "Jump to the highlighted symbol's definition" })
 vim.keymap.set("n", "gwd", "<C-w>]", { desc = "Jump to the highlighted symbol's definition in a new buffer" })
